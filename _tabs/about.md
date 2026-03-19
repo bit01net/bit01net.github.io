@@ -4,42 +4,25 @@ icon: fas fa-user
 order: 1
 toc: true
 ---
+> Hi, I’m **Umamaheswari**, a SOC-focused Cybersecurity Analyst dedicated to **threat detection, incident triage, and defensive security**.
 
-> Hi, I'm **Umamaheswari**, a SOC Analyst focused on **threat detection, network traffic analysis, and blue team security**.
-{: .prompt-danger }
+I enjoy understanding how attackers operate, analyzing their techniques, and improving defenses to detect and prevent real-world attacks.
 
-I enjoy analyzing network traffic, investigating security alerts, and understanding how attackers operate so defenses can be improved.
+---
 
-## Example Attack Chain
+## What You’ll Find Here
 
-```mermaid
-flowchart LR
-A[User clicks phishing email] --> B[Malicious macro runs]
-B --> C[PowerShell downloads payload]
-C --> D[Command & Control communication]
-D --> E[Data exfiltration]
+This blog is a technical notebook of my journey through the blue team landscape. My goal is to simplify complex security concepts through practical, visual documentation.
 
-### What I Do
-
-> - **Detection & Analysis**: SIEM Monitoring, Log Analysis (Windows/Linux/Web), Network Traffic Analysis (PCAP investigation).
-{: .prompt-warning }
-- **Incident Response**: Phishing Analysis, Malware Analysis, Digital Forensics.
-- **Engagement**: Proactive Threat Hunting, TTP Mapping (MITRE ATT&CK), CTF Write-ups
-
-### Certifications
-
-> - CEH Master v13
-> - PJPT
-> - SOC Analyst and Junior pentester (Tryhackme)
-> - CompTIA Security+
-> - **CDSA (Currently Pursuing)**
+> **Key Topics Covered:**
 {: .prompt-info }
 
-### Interests
+- **Advanced Alert Triage:** Correlation techniques using **Splunk and ELK**  
+- **Network Forensics:** Deep-dives into **PCAP using Wireshark, Zeek, and Brim** investigations  
+- **Endpoint Analysis:** Tracing threats through **Sysmon and Windows Event Logs**  
+- **Phishing Email Investigations:** Analyzing **Email Headers, Authentication Checks, URLs, Attachments**
+- **Digital Forensics:** Disk and Memory analysis using **FTK Imager, Autopsy, Kape, Volatility** and more   
+- **Lab Walkthroughs:** Step-by-step guides for **TryHackMe, HTB, and CyberDefenders**
 
-> I am particularly interested in:
-{: .prompt-tip }
 
-- Knowing How attacker got in , mapping their TTP, and stop and preventing future attacks
 
-This blog documents my **learning journey, security investigations, and technical notes** in cybersecurity.
