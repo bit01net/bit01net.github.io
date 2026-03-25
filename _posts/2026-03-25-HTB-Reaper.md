@@ -1,5 +1,5 @@
 ---
-title: 'Reaper -  LLMNR & NBT-NS Position attack'
+title: 'Reaper - LLMNR & NBT-NS Poisoning (PCAP Analysis)'
 author: Uma
 date: 2026-03-25
 categories: [Network Traffic]
@@ -29,7 +29,7 @@ That’s what we analyze in this lab: victim asks → attacker replies → victi
 
 ## PCAP Analysis 
 ### NetBIOS Traffic Analysis
-filter netbios traffic by using `nbns` 
+starting with filter netbios traffic by using `nbns` 
 ![NetBIOS traffic](/assets/images/htb-reaper/netbios.png)
 
 We can see two IPs resolving to these hostnames:
