@@ -1,6 +1,6 @@
 ---
 title: 'Reaper - LLMNR & NBT-NS Poisoning (PCAP Analysis)'
-author: Uma
+author: bit01net
 date: 2026-03-25
 categories: [Network Traffic]
 tags: [HTB, PCAP]
