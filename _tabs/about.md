@@ -15,7 +15,7 @@ I enjoy understanding how attackers operate, analyzing their techniques, and imp
 - **Network Forensics:** Deep-dives into **PCAP using Wireshark, Zeek, and Brim** investigations  
 - **Endpoint Analysis:** Tracing threats through **Sysmon and Windows Event Logs**  
 - **Phishing Email Investigations:** Analyzing **Email Headers, Authentication Checks, URLs, Attachments**
-- **Digital Forensics:** Disk and Memory analysis using **FTK Imager, Autopsy, Kape, Volatility** and more   
+- **Digital Forensics:** Disk and Memory analysis using **FTK Imager, Autopsy, EricZimmermantools, Volatility** and more   
 - **Lab Walkthroughs:** Step-by-step guides for **TryHackMe, HTB, and CyberDefenders**
 
 ---
