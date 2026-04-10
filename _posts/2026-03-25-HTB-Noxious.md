@@ -3,7 +3,7 @@ title: 'Noxious - PCAP Analysis'
 author: bit01net
 date: 2026-03-25
 categories: [Network Traffic]
-tags: [HTB, PCAP]
+tags: [HackTheBox, PCAP]
 image:
   path: /assets/images/htb-noxious/room_show.png
 ---

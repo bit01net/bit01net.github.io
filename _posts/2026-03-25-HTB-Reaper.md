@@ -3,10 +3,11 @@ title: 'Reaper - LLMNR & NBT-NS Poisoning (PCAP Analysis)'
 author: bit01net
 date: 2026-03-25
 categories: [Network Traffic]
-tags: [HTB, PCAP]
+tags: [HackTheBox, PCAP]
 image:
-  path: /assets/images/htb-reaper/room_show.png
+  path: /assets/images/htb-reaper/room_show1.png
 ---
+
 ### Scenario
 Our SIEM alerted us to a suspicious logon event which needs to be looked at immediately . The alert details were that the IP Address and the Source Workstation name were a mismatch .You are provided a network capture and event logs from the surrounding time around the incident timeframe. Corelate the given evidence and report back to your SOC Manager.
 
