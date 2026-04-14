@@ -4,6 +4,7 @@ icon: fas fa-user
 order: 1
 toc: true
 ---
+
 Hi, I’m Umamaheswari — a SOC-focused Cybersecurity Analyst passionate about threat detection and defensive security.
 
 I enjoy analyzing how attackers operate, understanding their techniques, and improving detection through hands-on investigation.
@@ -11,3 +12,5 @@ I enjoy analyzing how attackers operate, understanding their techniques, and imp
 This blog is my technical notebook where I share practical work on **Alert triage, Network and Endpoint analysis, Phishing investigations, and Digital forensics.** Most content is based on labs from **TryHackMe, Hack The Box**, and CyberDefenders.
 
 My goal is to simplify complex security concepts through clear, practical, and visual explanations.
+
+
