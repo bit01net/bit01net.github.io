@@ -4,20 +4,10 @@ icon: fas fa-user
 order: 1
 toc: true
 ---
-Hi, I’m **Umamaheswari**, a SOC-focused Cybersecurity Analyst dedicated to **threat detection, incident triage, and defensive security**.
+Hi, I’m Umamaheswari — a SOC-focused Cybersecurity Analyst passionate about threat detection and defensive security.
 
-I enjoy understanding how attackers operate, analyzing their techniques, and improving defenses to detect and prevent real-world attacks.
+I enjoy analyzing how attackers operate, understanding their techniques, and improving detection through hands-on investigation.
 
----
-## Key Topics Covered:
+This blog is my technical notebook where I share practical work on **Alert triage, Network and Endpoint analysis, Phishing investigations, and Digital forensics.** Most content is based on labs from **TryHackMe, Hack The Box**, and CyberDefenders.
 
-- **Advanced Alert Triage:** Correlation techniques using **Splunk and ELK**  
-- **Network Forensics:** Deep-dives into **PCAP using Wireshark, Zeek, and Brim** investigations  
-- **Endpoint Analysis:** Tracing threats through **Sysmon and Windows Event Logs**  
-- **Phishing Email Investigations:** Analyzing **Email Headers, Authentication Checks, URLs, Attachments**
-- **Digital Forensics:** Disk and Memory analysis using **FTK Imager, Autopsy, EricZimmermantools, Volatility** and more   
-- **Lab Walkthroughs:** Step-by-step guides for **TryHackMe, HTB, and CyberDefenders**
-
----
-
-This blog is a technical notebook of my journey through the blue team landscape. My goal is to simplify complex security concepts through practical, visual documentation.
+My goal is to simplify complex security concepts through clear, practical, and visual explanations.
