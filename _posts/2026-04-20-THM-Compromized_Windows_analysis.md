@@ -1,7 +1,7 @@
 ---
 title: 'Compromized Windows Analysis'
 author: bit01net
-date: 2026-04-10
+date: 2026-04-20
 categories: [Endpoint Investigation, DFIR]
 tags: [Tryhackme, DFIR]
 image:
