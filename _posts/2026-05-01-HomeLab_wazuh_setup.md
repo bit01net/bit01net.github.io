@@ -77,7 +77,8 @@ Remove Half Installed Agent using below command:
 msiexec /i C:\wazuh-agent.msi
 ```
 Choose: `Remove`
----
+
+
 Lets see, other option to install  from start
 
 ### Method 2: Manual Agent Installation
@@ -103,6 +104,7 @@ before clicking on `finish`, check this box
 ![](/assets/images/wazuh-setup/run_config_settings.png)
 
 ---
+
 **Configure Agent**
 
 The Wazuh Agent Configuration Tool opens.
@@ -137,6 +139,7 @@ It outputs a long authentication key.
 
 Back to agent setup on windows, Paste this key
 Then click - *Save*
+
 ---
 **Start Agent**
 On the Same above GUI:
@@ -157,6 +160,7 @@ You should see your Windows client connected.
 ![](/assets/images/wazuh-setup/both_active.png)
 
 ---
+
 ## Verifying Windows Logs in Wazuh
 Let’s verify Windows logs are reaching Wazuh from the agent.
 
@@ -246,6 +250,7 @@ Find the archive settings and enable them:
 <logall_json>yes</logall_json>
 What this does stores all received logs and  stores logs in JSON format for dashboard searching
 ```
+
 ![](/assets/images/wazuh-setup/change1.png)
 Save the file, then restart Wazuh manager:
 ```
@@ -263,7 +268,6 @@ Then restart services:
 systemctl restart wazuh-manager.service
 systemctl restart filebeat
 ```
----
 
 3. Verify Archive Logs Are Being Created
 
@@ -275,9 +279,7 @@ These contain all incoming logs, including Sysmon events.
 
 4. Create Archive Index in Dashboard
 
-Go to the dashboard:
-
-Management / Stack Management → Index Patterns (or Data Views)
+Go to the dashboard:Stack Management → Index Patterns (or Data Views)
 
 Create a new index: `wazuh-archives-**`
 
@@ -300,7 +302,6 @@ Then on the Wazuh server, search logs:
 
 If results appear, archive logging is working.
 
----
 Lets Go to `wazuh-archives-*` index, and see logs related to our event confirming We can now view all Sysmon events, not only alert-triggered ones.
 
 ![](/assets/images/wazuh-setup/found_mimi.png)
