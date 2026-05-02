@@ -43,6 +43,7 @@ Go to `https://localhost/`
 Login using the credentials shown during install.
 
 **Manage Wazuh Server**
+
 ```bash
 #check if its running - active
 sudo systemctl status wazuh-manager wazuh-indexer wazuh-dashboard filebeat 
@@ -63,6 +64,7 @@ Fill these details:
 `Agent Name`= Name of the Windows host
 `Group`= Default
 ![](/assets/images/wazuh-setup/agent_GUI_failed.png)
+
 Copy the generated PowerShell command and run it on Windows host (Open Powershell as Administrator, then run given command)
 
 IF it is installed correctly, Move to this step
@@ -70,6 +72,7 @@ IF it is installed correctly, Move to this step
 > only - IF it is not installed properly
 **This method did not work properly for me once because of a partial install.**
 ![](/assets/images/wazuh-setup/not_installed_host.png)
+
 Only if its not worked for you too, and it is broken or partially  installed and not installed properly 
 
 Remove Half Installed Agent using below command:
@@ -210,7 +213,7 @@ For a home lab, **I wanted only Sysmon logs** because they are far better for th
 
 So **I removed those four default channels and added only Sysmon under the Log Analysis section.** (If you want to view other logs, keep according to your needs)
 ![](/assets/images/wazuh-setup/only_sysmon_logs.png)
-```
+```xml
 <localfile>
   <location>Microsoft-Windows-Sysmon/Operational</location>
   <log_format>eventchannel</log_format>
@@ -224,9 +227,12 @@ Restart-Service WazuhSvc
 Or
 search `Service` -> Open --> look for `wazuh` service --> right click and then restart
 ![](/assets/images/wazuh-setup/GUI_wazuh_restart_service.png)
+
 To test if it was working, I ran some commands in PowerShell such as: **whoami, hostname, and basic enumeration commands**
 ![](/assets/images/wazuh-setup/generate_some_events.png)
+
 Then I went back to the `Dashboard` and **refreshed logs.**
+
 ![](/assets/images/wazuh-setup/enum_cmds_rules.png)
 
 I noticed only some commands like net user appeared, while commands like whoami or hostname did not. Why?
