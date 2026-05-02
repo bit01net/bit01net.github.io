@@ -17,7 +17,7 @@ Lab Environment
 My Ubuntu VM had only 50 GB disk space at first. During installation, Wazuh got stuck multiple times:
 Installer freezing, Ubuntu hanging, Slow performance, Dashboard issues.
 After increasing disk size, it worked properly.
-<span style="color:red;">So before installing Wazuh, make sure you have enough storage.</span>
+So before installing Wazuh, make sure you have enough storage.
 
 **Recommended:**
 80 GB disk or more
@@ -34,7 +34,7 @@ curl -sO https://packages.wazuh.com/4.13/wazuh-install.sh && sudo bash ./wazuh-i
 ```
 This installs: Wazuh Manager, Wazuh Indexer, Wazuh Dashboard, Wazuh Filebeat
 
-During installation <span style="color:green;">note the credentials shown on screen.</span>
+During installation note the credentials shown on screen.
 
 Access Dashboard --> Open browser on Ubuntu server
 Go to `https://localhost/`
@@ -63,7 +63,7 @@ Fill these details:
 `Agent Name`= Name of the Windows host
 `Group`= Default
 ![](/assets/images/wazuh-setup/agent_GUI_failed.png)
-Copy the generated PowerShell command and run it on Windows host <span style="color:orange;">(Open Powershell as Administrator, then run given command)</span>
+Copy the generated PowerShell command and run it on Windows host (Open Powershell as Administrator, then run given command)
 
 IF it is installed correctly, Move to this step
 
@@ -232,11 +232,11 @@ Then I went back to the `Dashboard` and **refreshed logs.**
 I noticed only some commands like net user appeared, while commands like whoami or hostname did not. Why?
 
 > Because by default, Wazuh mainly shows events that match existing Wazuh rules/decoders. It does not automatically display every single Sysmon event in alerts.
-So the next step is <span style="color:orange;">configuring the Wazuh server to read all Sysmon logs</span> and make them searchable on the Dashboard.
+So the next step is configuring the Wazuh server to read all Sysmon logs and make them searchable on the Dashboard.
 
 ## Forwarding All Sysmon Events to Wazuh Dashboard
 
-To view all Sysmon events, <span style="color:green;">we need to enable archives on the Wazuh server and configure Filebeat to ship those archived logs to the dashboard.</span>
+To view all Sysmon events, we need to enable archives on the Wazuh server and configure Filebeat to ship those archived logs to the dashboard.
 
 Only two files need to be edited.
 
