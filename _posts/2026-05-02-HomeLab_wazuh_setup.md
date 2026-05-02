@@ -1,7 +1,7 @@
 ---
-title: 'Wazuh Installation Guide (My Lab Setup)'
+title: 'Wazuh Installation Guide'
 author: bit01net
-date: 2026-05-01
+date: 2026-05-02
 categories: [HomeLab]
 tags: [Wazuh]
 image:
