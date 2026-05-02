@@ -7,11 +7,10 @@ tags: [Wazuh]
 image:
   path: /assets/images/wazuh-setup/room_show.png
 ---
-
-In this blog, I’m only sharing the steps I used to install and run Wazuh in my lab.
+In this blog, you’ll learn how to set up a Wazuh server on Ubuntu and install the Wazuh agent on Windows. We’ll then configure Sysmon log forwarding, enable visibility into all Sysmon events, and finally monitor our activity through the Wazuh Dashboard.
 
 Lab Environment
-- Ubuntu 22.04 
+- Ubuntu 24.04 
 - Windows 10 
 
 ### Important Issue I Faced
@@ -48,13 +47,13 @@ Login using the credentials shown during install.
 #check if its running - active
 sudo systemctl status wazuh-manager wazuh-indexer wazuh-dashboard filebeat 
 #disable running at every boot up
-sudo systemctl diable wazuh-manager wazuh-indexer wazuh-dashboard filebeat 
+sudo systemctl disable wazuh-manager wazuh-indexer wazuh-dashboard filebeat 
 #start all
 sudo systemctl start wazuh-manager wazuh-indexer wazuh-dashboard filebeat 
 ```
 ---
 
-## Installing Wazuh Agent on Windows 10
+## Install Wazuh Agent on Windows 10
 ### Method 1: Install Using Wazuh Dashboard
 
 Go to:
@@ -66,12 +65,12 @@ Fill these details:
 ![](/assets/images/wazuh-setup/agent_GUI_failed.png)
 Copy the generated PowerShell command and run it on Windows host <span style="color:orange;">(Open Powershell as Administrator, then run given command)</span>
 
-IF it is installed correctly, -- move to this step
+IF it is installed correctly, Move to this step
 
 > only - IF it is not installed properly
 **This method did not work properly for me once because of a partial install.**
 ![](/assets/images/wazuh-setup/not_installed_host.png)
-Only if its not worked for you too, and it is broked or partically installed and not installed properly 
+Only if its not worked for you too, and it is broken or partially  installed and not installed properly 
 
 Remove Half Installed Agent using below command:
 ```
@@ -108,7 +107,7 @@ before clicking on `finish`, check this box
 
 The Wazuh Agent Configuration Tool opens.
 
-Fill thse details:
+Fill these details:
 
 `Manager address` = Ubuntu hostname or IP #I would recommend using IP address
 
@@ -127,16 +126,16 @@ Add agent --> `A`
 
 Enter agent name --> `Windows-Client01`
 
-it will add agent and also show its id
+it will add agent and also show its ID
 ![](/assets/images/wazuh-setup/add_agent_cli.png)
 Then extract key: `E`
 
-Choose agent ID --> `Enter above created agent id`
+Choose agent ID --> `Enter above created agent ID`
 
 It outputs a long authentication key.
 ![](/assets/images/wazuh-setup/extract_key_cli.png)
 
-Back to agent set up on windows, Paste this key
+Back to agent setup on windows, Paste this key
 Then click - *Save*
 ---
 **Start Agent**
@@ -151,7 +150,7 @@ sc query WazuhSvc
 If it shows `RUNNING`, means Wazuh agent is working fine and ready.
 ---
 
-Lets Verify Agent on Server
+Let's Verify Agent on Server
 
 Run on Ubuntu: `sudo /var/ossec/bin/agent_control -l`
 You should see your Windows client connected.
@@ -223,13 +222,13 @@ search `Service` -> Open --> look for `wazuh` service --> right click and then r
 ![](/assets/images/wazuh-setup/GUI_wazuh_restart_service.png)
 To test if it was working, I ran some commands in PowerShell such as: **whoami, hostname, and basic enumeration commands**
 ![](/assets/images/wazuh-setup/generate_some_events.png)
-Then I went back to the `dashboard` and **refreshed logs.**
+Then I went back to the `Dashboard` and **refreshed logs.**
 ![](/assets/images/wazuh-setup/enum_cmds_rules.png)
 
 I noticed only some commands like net user appeared, while commands like whoami or hostname did not. Why?
 
 > Because by default, Wazuh mainly shows events that match existing Wazuh rules/decoders. It does not automatically display every single Sysmon event in alerts.
-So the next step is <span style="color:orange;">configuring the Wazuh server to read all Sysmon logs</span> and make them searchable on the dashboard.
+So the next step is <span style="color:orange;">configuring the Wazuh server to read all Sysmon logs</span> and make them searchable on the Dashboard.
 
 ## Forwarding All Sysmon Events to Wazuh Dashboard
 
@@ -242,7 +241,7 @@ Only two files need to be edited.
 Open: `nano /var/ossec/etc/ossec.conf` as sudo 
 
 Find the archive settings and enable them:
-```
+```xml
 <logall>yes</logall>
 <logall_json>yes</logall_json>
 What this does stores all received logs and  stores logs in JSON format for dashboard searching
@@ -285,9 +284,10 @@ Create a new index: `wazuh-archives-**`
 Choose time field:`timestamp`
 
 Save it.
+
 5. Generate Test Logs
 
-**Run some commands on the Windows machine or simulate activity.**
+**Run some commands on the Windows machine or simulate activity**
 
 Example lab test I used: Downloaded Mimikatz using certutil and Executed it in the lab
 
@@ -301,6 +301,6 @@ Then on the Wazuh server, search logs:
 If results appear, archive logging is working.
 
 ---
-Lets Go to `wazuh-archives-*` index, and see logs relates to our event confirming We can now view all Sysmon events, not only alert-triggered ones.
+Lets Go to `wazuh-archives-*` index, and see logs related to our event confirming We can now view all Sysmon events, not only alert-triggered ones.
 
 ![](/assets/images/wazuh-setup/found_mimi.png)
