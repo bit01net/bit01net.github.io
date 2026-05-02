@@ -67,13 +67,13 @@ Fill these details:
 
 Copy the generated PowerShell command and run it on Windows host (Open Powershell as Administrator, then run given command)
 
-IF it is installed correctly, Move to this step
+IF it is installed correctly, Proceed to this step
 
-> only - IF it is not installed properly
+> only - IF it's not installed properly
 **This method did not work properly for me once because of a partial install.**
 ![](/assets/images/wazuh-setup/not_installed_host.png)
 
-Only if its not worked for you too, and it is broken or partially  installed and not installed properly 
+Only follow this step if the first method did not work for you, or if the agent is broken, partially installed, or installed incorrectly.
 
 Remove Half Installed Agent using below command:
 ```
@@ -118,7 +118,7 @@ Fill these details:
 
 Now we need `authentication key` of this agent
 
-![](/assets/images/wazuh-setup/host&key.png)
+![](/assets/images/wazuh-setup/host_key.png)
 
 Go to  Ubuntu Wazuh Server
 Run this command:
@@ -254,8 +254,8 @@ Find the archive settings and enable them:
 ```xml
 <logall>yes</logall>
 <logall_json>yes</logall_json>
-What this does stores all received logs and  stores logs in JSON format for dashboard searching
 ```
+What this does stores all received logs and  stores logs in JSON format for dashboard searching.
 
 ![](/assets/images/wazuh-setup/change1.png)
 Save the file, then restart Wazuh manager:
