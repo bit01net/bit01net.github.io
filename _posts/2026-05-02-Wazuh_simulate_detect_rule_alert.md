@@ -1,11 +1,12 @@
 ---
-title: 'Test Post'
+title: 'Wazuh to Shuffle SOAR Automation: SHA256 Extraction, VirusTotal Enrichment, and Email Alerting'
 author: bit01net
 date: 2026-05-02
 categories: [HomeLab]
 tags: [Wazuh]
+image:
+  path: /assets/images/wazuh-trigger_rules/shuffle_chart.png
 ---
-
 This lab focuses on moving from manual log analysis to automated detection. Instead of reviewing every log after an attack, the idea is to simulating attacks and observe what indicators appear during an attack, identify the most reliable fields, and then convert those observations into detection rules. Once these rules are in place, similar activity in the future will automatically generate alerts. 
 This demonstrates how critical logs are, and how proper analysis and visibility turn raw data into actionable detection and faster incident response.
 
