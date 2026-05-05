@@ -173,9 +173,11 @@ Make sure the agent shows: Active, one agent
 
 If the agent is active, it means the Windows machine is successfully communicating with the Wazuh manager.
 
-(Insert Agent Active Screenshot Here)
+![](/assets/images/wazuh-setup/got-agent.png)
 
-to generate test activity and create fresh logs.
+Click on “Active” to view detailed information about the client host (agent).
+
+![](/assets/images/wazuh-setup/agent_more_details.png)
 
 Next, open the `Discover` tab.
 
@@ -311,3 +313,6 @@ If results appear, archive logging is working.
 Lets Go to `wazuh-archives-*` index, and see logs related to our event confirming We can now view all Sysmon events, not only alert-triggered ones.
 
 ![](/assets/images/wazuh-setup/found_mimi.png)
+
+---
+In the folowing lab, we will generate some suspicous logs(attack), wrie rules, to alerts those activities and do more like using shuffle to automate response like 
