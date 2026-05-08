@@ -1,5 +1,5 @@
 ---
-title: 'Wazuh to Shuffle SOAR Automation: SHA256 Extraction, VirusTotal Enrichment, and Email Alerting'
+title: 'Wazuh to Shuffle SOAR Automation: VirusTotal Enrichment, and Email Alerting'
 author: bit01net
 date: 2026-05-02
 categories: [HomeLab]
