@@ -17,12 +17,15 @@ To avoid simple detection based on filename, the binary was renamed to `Urm0n.ex
 
 ![Executed Mimikatz](/assets/images/wazuh-trigger_rules/mimikatz_exe_cli.png)
 
+Sysmon successfully generated the event logs on the Windows endpoint.
+![](/assets/images/wazuh-trigger_rules/sysmon.png)
 
-sysmon
+As part of the lab setup, Wazuh was already configured to collect all Sysmon logs into the archives. After executing the activity, the related logs were visible in the Wazuh archive logs, confirming that the events were being collected correctly.
+![](/assets/images/wazuh-trigger_rules/log_confirm_archieve.png)
+![](/assets/images/wazuh-trigger_rules/l_c1.png)
+![](/assets/images/wazuh-trigger_rules/l_c2.png)
 
-wazuh -archieve:
-
-Based on its logs generated, we will create rules , which then trigger alerts.
+Based on the above event showing the execution of the Mimikatz file, we will now create a custom Wazuh rule to detect and generate alerts for this activity.
 
 ### Defining Detection Rules
 
@@ -205,3 +208,4 @@ Save the workflow and click `Test Action` to trigger it
 You should receive the alert details via email, confirming that the notification workflow is working successfully.
 
 ![](/assets/images/wazuh-trigger_rules/email_received.png)
+
