@@ -317,9 +317,7 @@ Then on the Wazuh server, search logs:
 
 ![](/assets/images/wazuh-setup/cli_confirm.png)
 
-
-
-If In the logs, if our malicous activity shows, It means it detected, confirmed
+You can also search for related filenames used during the activity, such as `Urm0n.exe` (renamed Mimikatz).
 
 Lets Go to `wazuh-archives-*` index, and see logs related to our event confirming We can now view all Sysmon events, not only alert-triggered ones.
 
