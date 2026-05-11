@@ -59,18 +59,24 @@ sudo systemctl start wazuh-manager wazuh-indexer wazuh-dashboard filebeat
 
 Go to:
 `Dashboard → Overview → Agents → Deploy Agent`
+![](/assets/images/wazuh-setup/deploy_agent.png)
+
 Fill these details:
 `Server Address` = IP or hostname of Ubuntu Wazuh server
 `Agent Name`= Name of the Windows host
 `Group`= Default
-![](/assets/images/wazuh-setup/agent_GUI_failed.png)
+![](/assets/images/wazuh-setup/d_a_2.png)
 
 Copy the generated PowerShell command and run it on Windows host (Open Powershell as Administrator, then run given command)
+following this, also Restart Wazuh service
+![](/assets/images/wazuh-setup/d_a_restart.png)
 
 IF it is installed correctly, Proceed to this step
 
 > only - IF it's not installed properly
+
 **This method did not work properly for me once because of a partial install.**
+
 ![](/assets/images/wazuh-setup/not_installed_host.png)
 
 Only follow this step if the first method did not work for you, or if the agent is broken, partially installed, or installed incorrectly.
@@ -287,9 +293,10 @@ These contain all incoming logs, including Sysmon events.
 
 4. Create Archive Index in Dashboard
 
-Go to the dashboard:Stack Management → Index Patterns (or Data Views)
+Go to Dashboard Management → Index Patterns -> click on "create Index pattern"
 
-Create a new index: `wazuh-archives-**`
+![](/assets/images/wazuh-setup/archive_index.png)
+Index pattern name field: `wazuh-archives-**`
 
 Choose time field:`timestamp`
 
@@ -308,7 +315,7 @@ Then on the Wazuh server, search logs:
 
 `grep -i mimikatz /var/ossec/logs/archives/* -r`
 
-
+![](/assets/images/wazuh-setup/cli_confirm.png)
 
 
 
