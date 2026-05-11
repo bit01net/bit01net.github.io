@@ -1,5 +1,5 @@
 ---
-title: 'Wazuh Installation Guide'
+title: 'Wazuh Server/Agent Installation and Sysmon Integration Guide'
 author: bit01net
 date: 2026-05-02
 categories: [HomeLab]
@@ -306,13 +306,17 @@ Example lab test I used: Downloaded Mimikatz using certutil and Executed it in t
 
 Then on the Wazuh server, search logs:
 
-`grep -i mimikatz /var/ossec/logs/archives/* -r` on CLI
+`grep -i mimikatz /var/ossec/logs/archives/* -r`
 
-If results appear, archive logging is working.
+
+
+
+
+If In the logs, if our malicous activity shows, It means it detected, confirmed
 
 Lets Go to `wazuh-archives-*` index, and see logs related to our event confirming We can now view all Sysmon events, not only alert-triggered ones.
 
 ![](/assets/images/wazuh-setup/found_mimi.png)
 
 ---
-In the folowing lab, we will generate some suspicous logs(attack), wrie rules, to alerts those activities and do more like using shuffle to automate response like 
+In the folowing lab, we will generate some suspicous logs(attack), wrie rules to alerts those activities and do more like using shuffle to automate response.

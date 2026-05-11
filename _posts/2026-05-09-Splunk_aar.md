@@ -1,14 +1,14 @@
 ---
 title: 'SPLUNK Lab: Brute Force and Unauthorized Login Detection'
-author: bit01net
-date: 2026-05-06
+author: Umamaheswari
+date: 2026-05-09
 categories: [HomeLab]
 tags: [SPLUNK]
 image:
   path: /assets/images/splunk_small/show.png
 ---
 
-In this blog, we will simulate a brute-force attack in an Active Directory lab using Kali Linux, detect the activity in Splunk using Windows Security logs, create detection queries for failed and successful logins, and convert those queries into scheduled alerts for early detection and monitoring.
+In this blog, we will simulate a brute-force attack in an Active Directory lab using Kali Linux, detect the activity in Splunk using Windows Security logs, create detection queries for failed and successful logins, and convert those queries into scheduled alerts for early detection and monitoring. and finally verifying if our alerts do detect by attacking again.
 
 **LAB SET UP:**
 Windows 10,  Domain Controller (DC), Splunk, Kali Linux
@@ -20,7 +20,7 @@ Brute force attacks are noisy and easily detectable, but they are still widely u
 I used netexec to brute-force SMB authentication because RDP is often disabled by default, while SMB is commonly enabled in Active Directory environments.
 
 ```
-netexec smb 10.0.2.13 -u Billy -p /usr/share/wordlists/rockyou.txt -d BLUE.local --ignore-pw-decoding
+netexec smb 10.0.2.13 -u Billy -p /usr/share/wordlists/rockyou.txt -d BLUE.local 
 ```
 Command Breakdown
 `netexec `→ offensive networking/authentication tool
@@ -28,7 +28,6 @@ Command Breakdown
 `-u Billy` → target username
 `-p rockyou.txt` → password wordlist
 `-d BLUE.local` → target domain
-`--ignore-pw-decoding` → suppress decoding-related errors
 
 ![](/assets/images/splunk_small/Brute_force.png) 
 
@@ -55,7 +54,8 @@ A brute-force attack main goal is to gain Valid credentials which gives access t
 So after identifying repeated failed logins, the next step is checking whether the attacker eventually gained access to **Billy user account from this IP 10.0.7.6**.
 
 Successful logons generate: `Event ID 4624`
-```bash
+
+```
 index=windows host="Client-01" sourcetype="WinEventLog:Security" EventCode=4624 Account_Name!="*$" Account_Name!="ANONYMOUS LOGON" Source_Network_Address="10.0.2.6"
 | table _time Account_Name Source_Network_Address Logon_Type
 ```
@@ -64,18 +64,26 @@ index=windows host="Client-01" sourcetype="WinEventLog:Security" EventCode=4624 
 
 The Event shows that the attacker successfully authenticated to the Billy account from 10.0.2.6 at this time, confirming that the brute-force attack eventually succeeded. The **Logon_Type value 3 indicates a network logon**, commonly associated with SMB authentication.
 
----
-Above we did triggerd BruteForce against single user and login with Same IP
+## Why Detection Rules and Alerts Matter
 
-Instead of investigating only after an incident happens, we can build alerts to detect suspicious activity early.
+Above, we detected a brute-force attack against a single user from the same IP address. However, we already knew the attack happened because we performed it ourselves. In real-world environments, security analysts do not know when attackers or APT groups perform malicious activities.
+
+Instead, defenders create detection rules to identify suspicious or malicious behavior automatically. When incoming events match those rules, the SIEM generates an alert.
+
+After an alert is triggered, analysts begin the investigation.
+
+---
+
+## Creating Alerts in Splunk
+
+> In Splunk, we create detections using SPL (Search Processing Language) queries. Unlike Sigma or Wazuh rules, Splunk detections are typically written directly as SPL searches. When the query conditions are met, Splunk can generate an alert automatically.
+
 
 For larger environments and broader detection coverage:
 
 - remove host-specific filters to monitor all systems
 - detect brute-force attempts based on threshold counts
 - monitor logins from unknown or unauthorized IP addresses
-
----
 
 So, based on above ideology, let’s create queries to detect this activity if it happens again.
 
@@ -101,7 +109,6 @@ Account_Name!="ANONYMOUS LOGON"
 NOT Source_Network_Address IN ("10.0.2.13","10.0.2.10","10.0.2.10","127.0.0.1","::1","-")
 | table _time Account_Name, ComputerName, Source_Network_Address, Logon_Type
 ```
-## Save as Alerts
 
 After confirming the query detected the simulated activity successfully, click `Save As → Alert` at the top-right corner.
 ![](/assets/images/splunk_small/save_query.png)
@@ -112,34 +119,78 @@ Then, based on what the query is detecting, give the alert an appropriate name a
 
 Now you can fill the details depending on your environment and detection needs: environment size, log volume,
 how quickly you want alerts to trigger.
+
 For this Lab. I chose:
-`Alert type = scheduled` → to make Splunk run the query automatically at specific intervals
+`Alert type = scheduled` → Splunk automatically runs the query at specific intervals.
 
-`Time Range= Last 24 hours` -> searches logs generated within the last 24 hours.
+`Time Range= Last 24 hours` -> Searches logs generated within the last 24 hours.
 
-`cron expression: * * * * * `→ runs the query every minute to detect suspicious activity quickly
+`cron expression: * * * * * `→ Runs the query every minute to quickly detect suspicious activity.
 
 Under the Trigger Actions section:
 
-- choose Add to Triggered Alerts
-- select the severity level
+- choose **Add to Triggered Alerts**
+- Choose the alert severity level
 - save the alert
 
 ![](/assets/images/splunk_small/trigger_alerts_login2.png)
 
-If you go to `Triggered alerts` cron job will query last 24 windows every minute - for both activities
-and did generated alerts.
+Under the Alerts tab, we can see all alerts we created. From there, we can `edit alert settings`, **enable or disable alerts, and modify schedules or trigger conditions**. If you click `Open in Search`, Splunk reruns the saved query and displays the matching event details again.
+
 ![](/assets/images/splunk_small/both_alerts_2.png)
 
-If you click on `Open in Search`, Splunk runs the saved query again and shows the matching event details.
+## Testing and Validating Alerts
 
----
+To test the detections again, I performed another brute-force attack, but this time targeted a different user on another host called CLIENT-02 to verify whether the alerts still detected the activity.
+![](/assets/images/splunk_small/again_BF.png)
 
-Understanding Triggered Alerts:
+However, when I checked the `Triggered Alerts` tab, I initially did not see any triggered alerts.
 
-Even though the alerts were configured with a 24-hour time range and set to run every minute, only 2 alerts appeared under Triggered Alerts for each rule.
+**So I started troubleshooting step-by-step:**
 
-At first, I expected Splunk to create a new alert every minute since the query runs every minute. But Splunk works differently. Running the query every minute only means Splunk checks the condition every minute — it does not always generate a brand-new alert every time if the same matching events are already included within the alert time window.
+- Verified whether the brute-force and access events were actually logged. 
+   Confirmed the events existed in Splunk.
+
+- Checked whether both alerts were enabled
+   ( I disabled one during other home lab, so enabled it again)
+
+- Opened the alert using `Open in Search`
+   Then started modifying the query to detect the above activity.
+   when  i removed '`sourcetype="WinEventLog:Security"`
+
+the query started returning results again. I then **saved the updated alert.**
+
+![](/assets/images/splunk_small/detect_BF_again.png)
+
+![](/assets/images/splunk_small/detect_UA_again.png)
+
+Next, I checked **Triggered Alerts**.
+At this point, I noticed something important: Since the alert was configured to search the last 24 hours and run every minute. Splunk kept generating new alerts every minute for the same events.
+
+![](/assets/images/splunk_small/triggered_alerts.png)
+
+At first, I thought Splunk would generate only one alert for the same activity. However, because the matching events still remained within the 24-hour search window, the alert continued triggering every minute whenever the scheduled query ran again.
+
+To fix this, I changed the alert time range `from: Last 24 hours`  `to: Last 1 minute` 
+To do this, go to `edit alert`. In the `Time Range` field, select the time picker.
+Since the `Presets` section does not include a Last 1 minute option in this Splunk version, go to the `Relative` section instead.
+
+![](/assets/images/splunk_small/all_ranges.png)
+Then **configure the time range** by setting to "1 minute ago to Now"
+
+![](/assets/images/splunk_small/range_choose.png)
+
+This tells Splunk to search only the logs generated within the last 1 minute. Since the cron job is also configured to run every minute, Splunk checks only newly generated events each time the alert runs. This reduced duplicate alerts significantly.
+
+![](/assets/images/splunk_small/confirm_1minute.png)
+
+After configuring the values, click Apply, confirm the changes, and save the alert again.
+
+## Lessons Learned
+
+Always validate and test your detection rules and alerts after creating them.
+
+Even small filters or incorrect time ranges can prevent alerts from triggering correctly or can generate excessive duplicate alerts. 
 
 ---
 
